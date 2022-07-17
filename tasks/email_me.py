@@ -17,11 +17,11 @@ def _send_email(reccomended_books, selected_books):
         html_content=email_content,
     )
 
-    try:
-        sg = SendGridAPIClient(os.environ.get("SENDGRID_API_KEY"))
-        response = sg.send(message)
-    except Exception as e:
-        print("pass ", e)
+    #try:
+    sg = SendGridAPIClient(os.environ.get("SENDGRID_API_KEY"))
+    response = sg.send(message)
+    #except Exception as e:
+    #    print("pass ", e)
 
 
 def _get_reccomended_books(current_books):
