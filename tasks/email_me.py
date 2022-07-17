@@ -25,9 +25,9 @@ def _send_email(reccomended_books, selected_books):
 
 
 def _get_reccomended_books(current_books):
-    book_to_index = json.load(open("./datas/book_to_index.json"))
-    index_to_book = json.load(open("./datas/index_to_book.json"))
-    v_matrix = np.load("./datas/v_matrix.npy")
+    book_to_index = json.load(open("./tasks/datas/book_to_index.json"))
+    index_to_book = json.load(open("./tasks/datas/index_to_book.json"))
+    v_matrix = np.load("./tasks/datas/v_matrix.npy")
     book_names = list(book_to_index.keys())
     nbrs = NearestNeighbors(n_neighbors=8, algorithm="ball_tree").fit(v_matrix)
     selected_indexes = [book_to_index[book] for book in current_books]
