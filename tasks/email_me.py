@@ -8,17 +8,21 @@ from sendgrid import SendGridAPIClient
 from sendgrid.helpers.mail import Mail, To
 
 
-@task(schedule="@weekly")
-def email_me_books():
-    # Pick three random books from my list of faviorite books
+@task(
+    schedule="@weekly", description="Run model weekly to send new book recommendations"
+)
+def email_me_new_books():
+    # Pick three random books from my list of favorite books
     my_book_list = json.load(open("./tasks/datas/my_book_list.json"))
     selected_books = random.sample(my_book_list, 3)
     recommended_books = _get_recommended_books(selected_books)
-    _send_email("<br>- ".join(recommended_books), "<br>- ".join(selected_books))
+    _send_email(recommended_books, selected_books)
 
 
 def _send_email(recommended_books, selected_books):
-    email_content = f"Hi<br><br>You new book recs are<br>- {recommended_books}<br>______<br>Taken from:<br>- {selected_books}<br>Enjoy"
+    recommended_books_string = "<br>- ".join(recommended_books)
+    selected_books_string = "<br>- ".join(selected_books)
+    email_content = f"Hi<br><br>You new book recs are<br>- {recommended_books_string}<br>______<br>Taken from:<br>- {selected_books_string}<br>Enjoy"
     message = Mail(
         os.environ.get("FROM_EMAIL"),
         to_emails=[To(email=os.environ.get("TO_EMAIL"))],
@@ -53,4 +57,4 @@ def _get_recommended_books(current_books):
 
 
 if __name__ == "__main__":
-    email_me_books()
+    email_me_new_books()
