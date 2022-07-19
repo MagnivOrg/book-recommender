@@ -16,6 +16,7 @@ def email_me_new_books():
     my_book_list = json.load(open("./tasks/datas/my_book_list.json"))
     selected_books = random.sample(my_book_list, 3)
     recommended_books = _get_recommended_books(selected_books)
+    print("recommended books ", recommended_books)
     _send_email(recommended_books, selected_books)
 
 
