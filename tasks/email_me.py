@@ -9,7 +9,7 @@ from sendgrid.helpers.mail import Mail, To
 
 
 @task(
-    schedule="@weekly", description="Run model weekly to send new book recommendations"
+    schedule="@weekly", description="Run model weekly to send new book recommendations", webhook_trigger=True
 )
 def email_me_new_books():
     # Pick three random books from my list of favorite books
